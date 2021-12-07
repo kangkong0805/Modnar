@@ -1,44 +1,29 @@
 import logo from './logo.svg';
 import './App.css';
+import CountUp, { useCountUp } from 'react-countup';
+import React from 'react';
 
-const app = require('express')()
-const server = require('http').createServer(app)
-const cors = require('cors')
-const io = require('socket.io')(server,{
-    cors : {
-        origin :"*",
-        credentials :true
-    }
-});
-
-
-io.on('connection', socket=>{
-    socket.on('message',({name,message}) => {
-        io.emit('message',({name, message}))
-    })
-})
-
-server.listen(4000, function(){
-    console.log('listening on port 4000');
-})
-
-function App() {
+const App = () => {
+  const countUpRef = React.useRef(null);
+  const { start, pauseResume, reset, update } = useCountUp({
+    ref: countUpRef,
+    start: 0,
+    end: 1234567,
+    delay: 1,
+    duration: 5,
+    onReset: () => console.log('Resetted!'),
+    onUpdate: () => console.log('Updated!'),
+    onPauseResume: () => console.log('Paused or resumed!'),
+    onStart: ({ pauseResume }) => console.log(pauseResume),
+    onEnd: ({ pauseResume }) => console.log(pauseResume),
+  });
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div ref={countUpRef} />
+      <button onClick={() => update(1234567)}>Start</button>
+      <button onClick={reset}>Reset</button>
+      <button onClick={pauseResume}>Pause/Resume</button>
+      <button onClick={() => update(2000)}>Update to 2000</button>
     </div>
   );
 }
