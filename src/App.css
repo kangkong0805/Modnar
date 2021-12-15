@@ -5,26 +5,46 @@ ul, li{
 /*------------------------ Header ------------------------*/
 Header{
   display: flex;
+  border-bottom: 1px solid #828282;
+  height: 60px;
+  padding-left: 50px;
+  padding-right: 100px;
 }
 
 header>*{
-  /* flex-basis: 500px; */
-  flex-grow: 1;
+  /* flex-grow: 1; */
+}
+
+Header>*:nth-child(1){flex-grow: 1;}
+Header>*:nth-child(2){flex-grow: 1;}
+
+Header>div{
+  display: flex;
+  align-items: center;
+  margin-left: 10%;
 }
 
 Header ul{
+  padding: 0;
   display: flex;
-}
-
-Header ul *{
-
+  justify-content: space-around;
 }
 
 /*------------------------ Login ------------------------*/
 #background_layer{
+  position: absolute;
   width: 100vw;
   height: 100vh;
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+}
+
+#login_layer{
+  width: 600px;
+  height: 620px;
+  background: #fff;
+  margin: auto;
+  border-radius: 30px;
 }
