@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 
-const Login = props => {
+const Content = props => {
     const [inputs, setInputs] = useState({
         ID: "",
         PW: ""
@@ -20,7 +20,7 @@ const Login = props => {
 
     const onSumbit = (e) => {
         console.log({ID, PW});
-        if(ID != "" && PW != "") {
+        if(ID !== "" && PW !== "") {
             axios.post('주소', {
                 아이디파라미터: ID,
                 비번파라미터: PW
@@ -29,12 +29,10 @@ const Login = props => {
     }
 
     return (
-        <div className="background_layer gray">
+        <div className="">
             <div id="login_layer">
-                <div>
-                    <img src="" alt="logo" />
-                </div>
-                <input name="ID" type="text" value={ID} onChange={onChange} />
+                
+                <textarea name="content" type="text" value={content} onChange={onChange} />
                 <input name="PW" type="password" value={PW} onChange={onChange} />
                 <button onClick={onSumbit}>로그인</button>
             </div>
@@ -42,4 +40,4 @@ const Login = props => {
     )
 }
 
-export default Login;
+export default Content;

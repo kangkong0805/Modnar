@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import Login from './Login';
 
@@ -7,21 +7,29 @@ const Header = () => {
   const [isJoin, setJoin] = useState(false);
 
   return (
-    <header>
-      <div>
-        <Link to="/"><img src="" alt="logo"></img></Link>
-      </div>
-      <nav>
-        <ul>
-          <li>상품</li>
-          <li>판매</li>
-          <li onClick={() => setLogin(true)}>로그인</li>
-          <Link to="join"><li>회원가입</li></Link>
-          {isLogin && <Login onClose={() => setLogin(false)} />}
-        </ul>
-      </nav>
+    <>
+      <font>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Ruda&display=swap" rel="stylesheet" />
+      </font>
 
-    </header>
+      <header>
+        <div>
+          {/* <Link to="/"><img src="" alt="Logo"></img></Link> */}
+          <h1>Logo</h1>
+        </div>
+        <nav>
+          <ul>
+            <li tapindex="0"><h3>로그인</h3></li>
+            <li><h3>프로필</h3></li>
+            <li><h3>찜</h3></li>
+            {isLogin && <Login onClose={() => setLogin(false)} />}
+          </ul>
+        </nav>
+
+      </header>
+    </>
   );
 };
 
