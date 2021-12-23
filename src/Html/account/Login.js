@@ -20,9 +20,10 @@ const Login = props => {
     };
 
     const onSumbit = () => {
+        triggerNotif();
         console.log({ ID, PW, nickname });
         if (ID != "" && PW != "" && nickname != "") {
-            axios.post('/login', {
+            axios.post('/nlogi', {
                 user_id: ID,
                 user_pw: PW,
                 user_nickname: nickname
@@ -67,11 +68,39 @@ const Login = props => {
         props.onClose();
     }
 
+    const useNotification = (title, options) => {
+        if (!("Notification" in window)) {
+            return;
+        }
+
+        const fireNotif = () => {
+            /* 권한 요청 부분 */
+            if (Notification.permission !== "granted") {
+                Notification.requestPermission().then((permission) => {
+                    if (permission === "granted") {
+                        /* 권한을 요청받고 nofi를 생성해주는 부분 */
+                        new Notification(title, options);
+                    } else {
+                        return;
+                    }
+                });
+            } else {
+                /* 권한이 있을때 바로 noti 생성해주는 부분 */
+                new Notification(title, options);
+            }
+        };
+        return fireNotif;
+    };
+
+    const triggerNotif = useNotification("test", {
+        body: "id : "+ID+", pw : "+PW+", nickname : "+nickname
+    });
+
     return (
         <div className="background_layer gray">
             <div id="login_layer">
                 <div>
-                    {/* <img src="" alt="logo" /> */}
+                    <img src="img/BRICK.png" alt="logo" />
                     <h1 onClick={props.onClose}>로그인</h1>
                 </div>
                 아이디

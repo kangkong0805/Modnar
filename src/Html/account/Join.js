@@ -7,15 +7,15 @@ const Join = (props) => {
     const [inputs, setInputs] = useState({
         ID: "",
         PW: "",
-        nickname: ""
+        nickname: "",
+        email: ""
     });
-    const { ID, PW, nickname } = inputs;
+    const { ID, PW, nickname, email } = inputs;
 
 
 
     const onChange = (e) => {
         const { value, name } = e.target;
-        console.log(value, name);
         setInputs({
             ...inputs,
             [name]: value
@@ -23,16 +23,18 @@ const Join = (props) => {
     };
 
     const onSumbit = () => {
-        console.log({ ID, PW, nickname });
-        if (ID !== "" && PW !== "" && nickname !== "") {   // 입력 칸이 공백인지 아닌지 판단
+        console.log({ ID, PW, nickname, email });
+        if (ID !== "" && PW !== "" && nickname !== "" && email !== "") {   // 입력 칸이 공백인지 아닌지 판단
+            var reg_pw = /^.*(?=.{8,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/;     // 비밀번호 입력 조건 (영문, 숫자 혼합 8 ~ 20자리)
+            var reg_email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일 입력 형식
 
-            var reg_pw = /^.*(?=.{8,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/;                                              // 비밀번호 입력 조건 (영문, 숫자 혼합 8 ~ 20자리)
             if (reg_pw.test(PW)) {                                 // 비밀번호 입력 조건에 맞게 입력했는지 판단
-
+                if(reg_email.test(email)){
                 axios.post('/signup', {     // 서버에 정보 전달
                     make_id: ID,
                     make_pw: PW,
-                    make_nickname: nickname
+                    make_nickname: nickname,
+                    make_email: email
                 })
                     .then(({ data }) => {                             // 전달 성공
                         console.log(data.sign);
@@ -52,6 +54,9 @@ const Join = (props) => {
                     .catch((error) => {                               // 전달 실패
                         console.log(error);
                     })
+                } else {
+                    alert("이메일 형식에 맞게 작성해주세요");
+                }
             } else {
                 alert("비밀번호: 영문, 숫자 혼합 8~20자리");
                 console.log({ ...inputs });
@@ -65,15 +70,17 @@ const Join = (props) => {
         <div className="background_layer gray">
             <div id="login_layer">
                 <div>
-                    {/* <img src="" alt="logo" /> */}
-                <h1 onClick={props.onClose}>회원가입</h1>
+                    <img src="img/BRICK.png" alt="logo" />
+                    <h1 onClick={props.onClose}>회원가입</h1>
                 </div>
                 아이디
                 <input name="ID" type="text" value={ID} onChange={onChange} />  {/* 아이디는 무조건 입력해야 함 (안하고 회원가입 하면 서버 오류) */}
                 비밀번호
-                <input name="PW" type="text" value={PW} onChange={onChange} />
+                <input name="PW" type="password" value={PW} onChange={onChange} />
                 닉네임
                 <input name="nickname" type="text" value={nickname} onChange={onChange} />
+                이메일
+                <input name="email" type="text" value={email} onChange={onChange} />
                 <button onClick={onSumbit}>회원가입</button>
             </div>
         </div>
