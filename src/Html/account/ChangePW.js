@@ -19,7 +19,7 @@ const ChangePW = (props) => {
         });
     };
     /* 본인 계정의 이메일 인증  */
-    const onSumbitID = () => {
+    const onSumbitEmail = () => {
         console.log(email);
         // var reg_email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
         if (email !== "") {
@@ -103,7 +103,7 @@ const ChangePW = (props) => {
                 {isCheck ? (
                     <>
                         아이디
-                        < input name="id" type="text" value={id} onChange={onChange} />
+                        <input name="id" type="text" value={id} onChange={onChange} />
                         비밀번호
                         <input name="pw" type="text" value={pw} onChange={onChange} />
                         <button onClick={onSumbit}>비밀번호 변경</button>
@@ -111,13 +111,13 @@ const ChangePW = (props) => {
                 ) : (
                     <>
                         이메일
-                        < input name="email" type="text" value={email} onChange={onChange} />
+                        <input name="email" type="text" value={email} onChange={onChange} />
+                        <button onClick={onSumbitEmail}>이메일 인증</button>
                         인증번호
                         <input name="checkNum" type="text" value={checkNum} onChange={onChange} />
+                        <button onClick={onSumbitCheckNum}>인증번호 확인</button>
                     </>)
                 }
-                <button onClick={onSumbitCheckNum}>인증번호 확인</button>
-                <button onClick={onSumbitID}>이메일 인증</button>
             </div>
         </div>
     )

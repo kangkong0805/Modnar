@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 const Join = (props) => {
 
@@ -38,12 +37,11 @@ const Join = (props) => {
                 })
                     .then(({ data }) => {                             // 전달 성공
                         console.log(data.sign);
-                        if (data.sign == 1) {                         // 아이디가 안될 경우
+                        if (data.sign === 1) {                         // 아이디가 안될 경우
                             alert("다른 아이디로 작성해주세요");
                             setInputs({
-                                ID: "",
-                                PW: PW,
-                                nickname: nickname
+                                ...inputs,
+                                ID: ""
                             });
                         } else {                                      // 회원가입 되었을 경우
                             alert("회원가입에 성공하셨습니다");

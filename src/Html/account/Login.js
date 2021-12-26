@@ -1,15 +1,12 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
-import Join from "./Join";
+import React, { useState } from "react";
 
 const Login = props => {
-    const [isJoin, setJoin] = useState(false);
     const [inputs, setInputs] = useState({
         ID: "",
         PW: "",
-        nickname: ""
     });
-    const { ID, PW, nickname } = inputs;
+    const { ID, PW } = inputs;
 
     const onChange = (e) => {
         const { value, name } = e.target;
@@ -20,31 +17,28 @@ const Login = props => {
     };
 
     const onSumbit = () => {
-        triggerNotif();
-        console.log({ ID, PW, nickname });
-        if (ID != "" && PW != "" && nickname != "") {
-            axios.post('/nlogi', {
-                user_id: ID,
-                user_pw: PW,
-                user_nickname: nickname
+        // triggerNotif();
+        console.log({ ID, PW });
+        if (ID !== "" && PW !== "") {
+            axios.post('/login', {
+                id: ID,
+                pw: PW
             })
                 .then(({ data }) => {                                // 전달 성공
                     console.log(data.stat);
-                    if (data.stat == 1) {
+                    if (data.stat === 1) {                            // 아이디 잘못 적었을 때
                         alert("아이디를 다시 입력해주세요");
                         setInputs({
                             ID: "",
-                            PW: PW,
-                            nickname: nickname
+                            PW: PW
                         })
-                    } else if (data.stat == 2) {
+                    } else if (data.stat === 2) {                     // 비밀번호 잘못 적었을 때
                         alert("비밀번호를 다시 입력해주세요");
                         setInputs({
                             ID: ID,
-                            PW: "",
-                            nickname: nickname
+                            PW: ""
                         })
-                    } else {
+                    } else {                                         // 로그인 성공했을 때
                         alert("성공하였습니다.");
                         props.onClose();
                     }
@@ -93,7 +87,7 @@ const Login = props => {
     };
 
     const triggerNotif = useNotification("test", {
-        body: "id : "+ID+", pw : "+PW+", nickname : "+nickname
+        body: "id : "+ID+", pw : "+PW
     });
 
     return (
@@ -107,8 +101,6 @@ const Login = props => {
                 <input name="ID" type="text" value={ID} onChange={onChange} />
                 비밀번호
                 <input name="PW" type="password" value={PW} onChange={onChange} />
-                닉네임
-                <input name="nickname" type="text" value={nickname} onChange={onChange} />
                 <button onClick={onSumbit}>로그인</button>
                 <button onClick={onJoin}>회원가입</button>
                 <h4 onClick={onFindPW}>비밀번호 찾기</h4>
