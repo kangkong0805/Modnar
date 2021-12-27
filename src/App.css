@@ -1,14 +1,48 @@
+#root{
+  /* width: auto; */
+  /* height: auto; */
+  top: 0;
+  left: 0;
+  /* position: absolute; */
+}
+
 ul, li{
   list-style: none;
 }
 
+a{
+  text-decoration: none;
+}
+
+main{
+  padding-top: 60px;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
+
+@font-face {
+  font-family: "OTWelcomeRA";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeRA.woff2%22")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
 /*------------------------ Header ------------------------*/
 Header{
+  position: fixed;
   display: flex;
+  width: 52vw;
   height: 60px;
-  padding-left: 47.5vw;
+  padding-left: 48vw;
   /* padding-right: 100px; */
   background-color: #F1BBA4;
+  z-index: 2;
+}
+
+Header::-webkit-scrollbar{
+  display: none;
 }
 
 header>*{
@@ -35,14 +69,45 @@ header nav{
 
 Header ul{
   padding: 0;
-  margin-top: 12px;
-  margin-bottom: auto;
   display: flex;
   justify-content: space-evenly;
-  /* font-weight: bolder; */
+  height: auto;
 }
 
-Header nav ul>*:nth-child(1):active{border-bottom: 1px solid red;}
+Header ul h3{
+  margin-bottom: 0;
+}
+
+Header li>h3:hover{
+  margin-top: 16px;
+  font-size: 1.4em;
+  /* color: #000; */
+  animation: changeColor 2s infinite;
+}
+
+@keyframes changeColor {
+  0% {color: red;}
+  12.5% { color: orange; }
+ 25% { color: yellow; }
+ 37.5% { color: green; }
+ 50% { color: skyblue; }
+ 62.5% { color: blue; }
+ 75% { color: purple; }
+ 87.5% { color: pink; }
+ 100% { color: red; }
+}
+/*------------------------ Footer ------------------------*/
+footer{
+  position: fixed;
+  bottom: -4px;
+  height: 87px;
+  z-index: 1;
+}
+
+footer img{
+  width: 100vw;
+  height: 100%;
+}
 
 /*------------------------ Login ------------------------*/
 .background_layer{
@@ -54,6 +119,8 @@ Header nav ul>*:nth-child(1):active{border-bottom: 1px solid red;}
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
+  z-index: 10;
 }
 
 .gray{
@@ -78,7 +145,7 @@ Header nav ul>*:nth-child(1):active{border-bottom: 1px solid red;}
 }
 
 #login_layer img{
-  left: 100px;
+  width: 300px;
 }
 
 #join_layer{
@@ -96,7 +163,230 @@ textarea{
   height: 50vh;
 }
 
-
 .post input{
   opacity: 0;
+}
+
+/*------------------------ Join ------------------------*/
+
+
+/*------------------------ Profile ------------------------*/
+#profile_background{
+  position: absolute;
+  width: 302px;
+  height: 502px;
+  top: 100px;
+  right: 0;
+  overflow: hidden;
+}
+
+#profile{
+  position: absolute;
+  width: 300px;
+  height: 450px;
+  border: 1px solid #000000;
+  border-right: 0;
+  border-radius: 10px 0px 0px 10px;
+  padding-top: 50px;
+}
+
+@keyframes slidein{
+  0% {
+    right: -300px;
+  }
+  100% {
+    right: 0;
+  }
+}
+@keyframes slideout{
+  0% {
+    right: 0;
+  }
+  100% {
+    right: -300px;
+  }
+}
+
+#profile>*{
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+}
+
+#profile>.img{
+  width: 100px;
+  height: 100px;
+  background: #FFE0E0;
+  border-radius: 15px
+}
+
+#profile img{
+  width: 150px;
+  margin-left: -26px;
+  margin-top: 10px;
+}
+
+#profile span{
+  width: 65%;
+  height: 1px;
+  /* position: absolute; */
+  background-color: #000000;
+}
+
+#profile li{
+  color: #727272;
+  margin: 25px auto;
+}
+
+#profile li:hover{
+  font-size: 18px;
+}
+
+/*------------------------ Upload ------------------------*/
+.upload {
+  width: 700px;
+  margin: 0 auto;
+  padding-top: 200px;
+}
+#component {
+  width: 700px;
+  height: 280px;
+  background-color: white;
+  margin-bottom: 100px;
+}
+
+#title-component {
+  width: 700px;
+  height: 180px;
+  background-color: white;
+  margin-bottom: 100px;
+  margin-top: 390px;
+  display: flex;
+}
+
+h2 {
+  font-size: 28px;
+}
+
+p {
+  color: gray;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+#pictureBox {
+  width: 630px;
+  height: 400px;
+  margin-left: 6%;
+  margin-top: 20px;
+  border: black 1px solid;
+  border-radius: 15px;
+  text-align: center;
+}
+
+#picture {
+  display: none;
+}
+#nonePicture {
+  margin-top: 120px;
+}
+.tit {
+  display: flex;
+}
+
+#title {
+  width: 570px;
+  height: 28px;
+  margin-left: 4%;
+  border: none;
+  border-bottom: black 1px solid;
+  outline: none;
+  font-size: 2vh;
+}
+
+#description {
+  width: 690px;
+  height: 250px;
+  font-size: large;
+  border-radius: 15px;
+  margin-top: 10px;
+  outline: none;
+  padding: 10px 10px 10px 10px;
+  border: none;
+}
+
+textarea::-webkit-input-placeholder {
+  font-size: 26px;
+  font-style: italic;
+}
+
+#price {
+  border: none;
+  border-bottom: black 1px solid;
+  height: 40px;
+  width: 200px;
+  outline: none;
+  text-align: right;
+  padding-right: 10px;
+  margin-left: 4%;
+  font-size: 30px;
+}
+
+.price {
+  display: flex;
+  margin-top: 230px;
+}
+
+#won {
+  margin-top: 6px;
+  margin-left: 6px;
+}
+
+#uploadBtn {
+  width: 200px;
+  height: 40px;
+  border: none;
+  border-radius: 16px;
+  background-color: #ffe0e0;
+  margin-left: 80%;
+  font-size: 15px;
+  padding-top: 8px;
+  margin-bottom: 300px;
+  transition: 0.3s;
+}
+
+#uploadBtn:hover {
+  box-shadow: 5px 5px 5px #e4c5c5;
+  transition: 0.4s;
+}
+
+#preview {
+  height: 100%;
+}
+
+.tag{
+  border: 2px solid #BE3213;
+  border-radius: 20px;
+  background: #fff;
+  width: 160px;
+  height: 50px;
+}
+
+.tag h3{
+  margin: 0;
+}
+
+/*------------------------ 404 error ------------------------*/
+#error{
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+#error h1{
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  font-size: 5em;
 }
