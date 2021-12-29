@@ -103,8 +103,10 @@ function Upload() {
     else if (explanation === "") {
       alert("설명을 작성해주세요");
     } else {
-      axios.post('url', {
-        // 파라미터: 값
+      axios.post('/uploading', {
+        title: title,
+        content: explanation,
+        tag: "전자제품"
       })
         .then((response) => {
           console.log(response);
