@@ -81,32 +81,36 @@ function Upload() {
   /* 업록드 버튼 클릭 시 호출 */
   const onSumbit = e => {
     var checkTag = false;
+    var string = "";
     for (let index in tags) {
       if (tags[index] === true) {
         checkTag = true;
-        break;
+        string += index + " ";
       }
     }
     /* 파일 확인 여부 */
-    if (file[0] === undefined) {
-      alert("이미지가 있는 파일을 추가해주세요");
-    }
+    // if (file[0] === undefined) {
+    //   alert("이미지가 있는 파일을 추가해주세요");
+    // }
     /* 제목 작성 여부 */
-    else if (title === "") {
+     if (title === "") {
       alert("제목을 입력해주세요");
     }
     /* 태그 선택 확인 여부 */
-    else if (checkTag !== true) {
-      alert("태그 체크 해 주세요");
-    }
+    // else if (checkTag !== true) {
+    //   alert("태그 체크 해 주세요");
+    // }
     /* 설명 작성 여부 */
     else if (explanation === "") {
       alert("설명을 작성해주세요");
     } else {
+      console.log(title, explanation, price);
       axios.post('/uploading', {
         title: title,
         content: explanation,
-        tag: "전자제품"
+        tag: "abc",
+        price: 10,
+        file: file[0]
       })
         .then((response) => {
           console.log(response);
@@ -121,48 +125,49 @@ function Upload() {
     <>
       <Header />
       <div className="upload">
-        <div id="component">
-          <h2>사진</h2>
-          <input type="file" multiple onChange={ShowImage} id="picture" />
-          <label htmlFor="picture">
-            <div id="pictureBox">
-              {file[0] ? (
-                <img id="preview" src={file[0]} alt="img" />  // 선택한 파일의 이미지
-              ) : (
-                <>
-                  <img id="nonePicture" src="grayLogo.png" />
-                  <p>사진을 선택해주세요.</p>
-                </>
-              )}
-            </div>
-          </label>
-          <input id="picture" type={"file"}></input>
-        </div>
+        <form action="/uploading" enctype="multipart/form-data" method="post">
+          <div id="component">
+            <h2>사진</h2>
+            <input type="file" name="attachments" id="picture" onClick={ShowImage} multiple="multiple"/>
+            <label htmlFor="picture">
+              <div id="pictureBox">
+                {file[0] ? (
+                  <img id="preview" src={file[0]} alt="img" />  // 선택한 파일의 이미지
+                ) : (
+                  <>
+                    <img id="nonePicture" src="grayLogo.png" />
+                    <p>사진을 선택해주세요.</p>
+                  </>
+                )}
+              </div>
+            </label>
+          </div>
 
-        <div id="title-component">
-          <h2>제목</h2>
-          <input type="text" id="title" value={title} name="title" onChange={onChange}></input>
-        </div>
+          <div id="title-component">
+            <h2>제목</h2>
+            <input type="text" id="title" value={title} name="title" onChange={onChange} /> 
+          </div>
 
-        <div id="component">
-          <h2>태그</h2>
-          <button className="tag" onClick={onTag} name="electronics" style={{ background: electronics ? "#f1bba4" : "#fff" }}>전자기기</button>
-          <button className="tag" onClick={onTag} name="fasion" style={{ background: fasion ? "#f1bba4" : "#fff" }}>패션</button>
-          <button className="tag" onClick={onTag} name="food" style={{ background: food ? "#f1bba4" : "#fff" }}>식품</button>
-          <button className="tag" onClick={onTag} name="free" style={{ background: free ? "#f1bba4" : "#fff" }}>무료나눔</button>
-          <button className="tag" onClick={onTag} name="unknown" style={{ background: unknown ? "#f1bba4" : "#fff" }}>미개봉</button>
-        </div>
+          <div id="component">
+            <h2>태그</h2>
+            <button className="tag" onClick={onTag} name="electronics" style={{ background: electronics ? "#f1bba4" : "#fff" }}>전자기기</button>
+            <button className="tag" onClick={onTag} name="fasion" style={{ background: fasion ? "#f1bba4" : "#fff" }}>패션</button>
+            <button className="tag" onClick={onTag} name="food" style={{ background: food ? "#f1bba4" : "#fff" }}>식품</button>
+            <button className="tag" onClick={onTag} name="free" style={{ background: free ? "#f1bba4" : "#fff" }}>무료나눔</button>
+            <button className="tag" onClick={onTag} name="unknown" style={{ background: unknown ? "#f1bba4" : "#fff" }}>미개봉</button>
+          </div>
 
-        <div id="component">
-          <textarea id="description" placeholder="설명" value={explanation} name="explanation" onChange={onChange}></textarea>
-        </div>
+          <div id="component">
+            <textarea id="description" placeholder="설명" value={explanation} name="explanation" onChange={onChange} />
+          </div>
 
-        <div id="component" className="price">
-          <h2>가격</h2>
-          <input type="number" id="price" min="0" step="10" value={price} name="price" onChange={onChange}></input>
-          <h2 id="won">원</h2>
-        </div>
-        <input type="button" id="uploadBtn" value={"업로드"} onClick={onSumbit}></input>
+          <div id="component" className="price">
+            <h2>가격</h2>
+            <input type="number" id="price" min="0" step="10" value={price} name="price" onChange={onChange} />
+            <h2 id="won">원</h2>
+          </div>
+          <input type="submit" id="uploadBtn" value={"업로드"} onClick={onSumbit} />
+        </form>
       </div>
     </>
   );
