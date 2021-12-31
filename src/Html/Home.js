@@ -6,16 +6,19 @@ import Footer from './Footer';
 
 const Home = () => {
 
-  const [list, setList] = useState([]);
+  const [list, setList] = useState({});
 
   const Button = () => {
     axios.get('/main')
       .then(({ data }) => {
-        console.log(data[0]);
+        console.log(data);
         setList({
-          list: data[0][0][0]
+          list: data[0][0].title
         })
         console.log(list);
+        Object.entries(list).map((a,index) => {
+          console.log(a, index);
+        })
       })
       .catch((error) => {
         console.log(error);
@@ -28,17 +31,19 @@ const Home = () => {
       <main>
       <button onClick={Button}>버튼</button>
         <ul>
-          {/* {list.map((index, num) => {
+          { list !== undefined ? (
+          Object.values(list).map((index, num) => {
             return (
               <>
-                <li>{index.title}</li>
+                <li>{index}</li>
               </>
             )
-          })} */}
+          })
+          ) : (<></>)
+          }
+          
 
-          {/* {
-            {list.title}
-          } */}
+          
         </ul>
 
 
