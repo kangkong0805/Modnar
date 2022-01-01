@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Login = props => {
     const [inputs, setInputs] = useState({
@@ -7,6 +7,8 @@ const Login = props => {
         PW: "",
     });
     const { ID, PW } = inputs;
+
+    const [check, setCheck] = useState(false);
 
     const onChange = (e) => {
         const { value, name } = e.target;
@@ -21,25 +23,26 @@ const Login = props => {
         console.log({ ID, PW });
         if (ID !== "" && PW !== "") {
             axios.post('/login', {
-                id: ID,
-                pw: PW
+                user_id: ID,
+                user_pw: PW
             })
                 .then(({ data }) => {                                // 전달 성공
-                    console.log(data.stat);
-                    if (data.stat === 1) {                            // 아이디 잘못 적었을 때
+                    console.log(data.login);
+                    if (data.login === "noid") {                            // 아이디 잘못 적었을 때
                         alert("아이디를 다시 입력해주세요");
                         setInputs({
                             ID: "",
                             PW: PW
                         })
-                    } else if (data.stat === 2) {                     // 비밀번호 잘못 적었을 때
+                    } else if (data.login === "nopw") {                     // 비밀번호 잘못 적었을 때
                         alert("비밀번호를 다시 입력해주세요");
                         setInputs({
                             ID: ID,
                             PW: ""
                         })
-                    } else {                                         // 로그인 성공했을 때
+                    } else if (data.login === "succed") {                    // 로그인 성공했을 때
                         alert("성공하였습니다.");
+                        props.name();
                         props.onClose();
                     }
 
@@ -95,11 +98,11 @@ const Login = props => {
             <div id="login_layer">
                 <div>
                     <img src="img/BRICK.png" alt="logo" />
-                    <h1 onClick={props.onClose}>로그인</h1>
+                    <h1 onClick={props.onClose}>{check ? "로그아웃" : "로그인"}</h1>
                 </div>
-                아이디
+                <p>아이디</p>
                 <input name="ID" type="text" value={ID} onChange={onChange} />
-                비밀번호
+                <p>비밀번호</p>
                 <input name="PW" type="password" value={PW} onChange={onChange} />
                 <button onClick={onSumbit}>로그인</button>
                 <button onClick={onJoin}>회원가입</button>

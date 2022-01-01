@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const ChangePW = (props) => {
     const [inputs, setInputs] = useState({
@@ -7,9 +7,9 @@ const ChangePW = (props) => {
         checkNum: null, // 인증번호
         id: "",         // 아이디
         pw: "",         // 바꿀 비밀번호
-        isCheck: false  // 인증번호 확인 여부
     });
-    const { email, checkNum, id, pw, isCheck } = inputs;
+    const { email, checkNum, id, pw } = inputs;
+    const [isCheck, setCheck] = useState(false);    // 인증번호 확인 여부
 
     const onChange = (e) => {
         const { value, name } = e.target;
@@ -24,7 +24,7 @@ const ChangePW = (props) => {
         // var reg_email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
         if (email !== "") {
             axios.post('/find', {
-                find_pw_email: email
+                user_email: email
             })
                 .then(({ data }) => {
                     console.log(data);
@@ -50,11 +50,14 @@ const ChangePW = (props) => {
         console.log(checkNum);
         // var reg_email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
         if (checkNum !== "") {
-            axios.post('', {
-                AuthNumber: checkNum
+            axios.post('/pw', {
+                ch_pw: checkNum
             })
-                .then((response) => {
-                    console.log(response.data);
+                .then(({data}) => {
+                    console.log(data.pwchange);
+                    if(data.pwchange === "succed"){
+                        setCheck(true);
+                    }
                 })
                 .catch((error) => {
                     console.log(error);
@@ -73,9 +76,9 @@ const ChangePW = (props) => {
     const onSumbit = () => {
         console.log(checkNum);
         if (checkNum !== "") {
-            axios.post('/pwreset', {
-                user_id: email,
-                user_pw: pw
+            axios.post('/pwchange', {
+                ch_id: id,
+                ch_pw: pw
             })
                 .then((response) => {
                     console.log(response.data);

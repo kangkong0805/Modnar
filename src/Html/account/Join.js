@@ -30,10 +30,10 @@ const Join = (props) => {
             if (reg_pw.test(PW)) {                                 // 비밀번호 입력 조건에 맞게 입력했는지 판단
                 if(reg_email.test(email)){
                 axios.post('/signup', {     // 서버에 정보 전달
-                    make_id: ID,
-                    make_pw: PW,
-                    make_nickname: nickname,
-                    make_email: email
+                    user_id: ID,
+                    user_pw: PW,
+                    user_email: email,
+                    user_nickname: nickname
                 })
                     .then(({ data }) => {                             // 전달 성공
                         console.log(data.sign);
