@@ -23,17 +23,22 @@ function Upload() {
 
   /* 선택한 파일의 이미지 추출 */
   const ShowImage = (e) => {
-    console.log(e.target.files.length); // 선택한 파일의 개수
+    // console.log(e.target.files.length); // 선택한 파일의 개수
 
-    for (let i = 0; i < e.target.files.length; i++) {
-      const reader = new FileReader();
-      reader.onloadend = (a) => {
-        // console.log(a.currentTarget.result);  // 파일의 위치
-        setFile((file) => [...file, a.currentTarget.result]);
-      };
-      if (e.target.files && e.target.files[i])
-        reader.readAsDataURL(e.target.files[i]);
-    }
+    // for (let i = 0; i < e.target.files.length; i++) {
+    //   const reader = new FileReader();
+    //   reader.onloadend = (a) => {
+    //     // console.log(a.currentTarget.result);  // 파일의 위치
+    //     setFile((file) => [...file, a.currentTarget.result]);
+    //   };
+    //   if (e.target.files && e.target.files[i])
+    //     reader.readAsDataURL(e.target.files[i]);
+    // }
+
+    console.log(e.target.files);
+    setFile({
+      file: e.target.files
+    });
   };
 
   /* 태그 버튼 클릭 시 호출 */
@@ -51,7 +56,6 @@ function Upload() {
         ...tags,
         fasion: !fasion
       });
-      // console.log(fasion);
     } else if (name === 'food') {
       setTags({
         ...tags,
@@ -70,6 +74,7 @@ function Upload() {
     }
   }
 
+  /* 입력창에 입력 시 호출 */
   const onChange = (e) => {
     const { value, name } = e.target;
     setInputs({
@@ -88,12 +93,13 @@ function Upload() {
         string += index + " ";
       }
     }
+
     /* 파일 확인 여부 */
     // if (file[0] === undefined) {
     //   alert("이미지가 있는 파일을 추가해주세요");
     // }
     /* 제목 작성 여부 */
-     if (title === "") {
+    if (title === "") {
       alert("제목을 입력해주세요");
     }
     /* 태그 선택 확인 여부 */
@@ -128,7 +134,7 @@ function Upload() {
         <form action="/uploading" enctype="multipart/form-data" method="post">
           <div id="component">
             <h2>사진</h2>
-            <input type="file" name="attachments" id="picture" onClick={ShowImage} multiple="multiple"/>
+            <input type="file" name="attachments" id="picture" onClick={ShowImage} multiple />
             <label htmlFor="picture">
               <div id="pictureBox">
                 {file[0] ? (
@@ -145,7 +151,7 @@ function Upload() {
 
           <div id="title-component">
             <h2>제목</h2>
-            <input type="text" id="title" value={title} name="title" onChange={onChange} /> 
+            <input type="text" id="title" value={title} name="title" onChange={onChange} />
           </div>
 
           <div id="component">
