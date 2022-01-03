@@ -1,14 +1,15 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 const ChangePW = (props) => {
     const [inputs, setInputs] = useState({
         email: "",      // 이메일
-        checkNum: null, // 인증번호
+        checkNum: 0, // 인증번호
         id: "",         // 아이디
         pw: "",         // 바꿀 비밀번호
     });
     const { email, checkNum, id, pw } = inputs;
+    const [isCheckNum, setCheckNum] = useState({});
     const [isCheck, setCheck] = useState(false);    // 인증번호 확인 여부
 
     const onChange = (e) => {
@@ -20,24 +21,21 @@ const ChangePW = (props) => {
     };
     /* 본인 계정의 이메일 인증  */
     const onSumbitEmail = () => {
-        console.log(email);
-        // var reg_email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-        if (email !== "") {
+        var reg_email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+        if (email.match(reg_email)) {
             axios.post('/find', {
                 user_email: email
             })
                 .then(({ data }) => {
-                    console.log(data);
-                    setInputs({
-                        email: email
-                    })
-
+                    alert("입력하신 이메일에서 인증번호를 확인해주세요");
+                    setCheckNum({isCheckNum: data})
+                    console.log([data], Object.values(isCheckNum));
                 })
                 .catch((error) => {
                     console.log(error);
                 })
-        } else {
-            alert("입력칸을 확인해주세요");
+            } else {
+            alert("잘못된 이메일을 입력하셨습니다");
             setInputs({
                 ...inputs,
                 email: ""
@@ -47,29 +45,18 @@ const ChangePW = (props) => {
 
     /* 이메일로 발급받은 인증번호 확인 */
     const onSumbitCheckNum = () => {
-        console.log(checkNum);
+        console.log(checkNum.toString() == isCheckNum['isCheckNum'].toString());
         // var reg_email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-        if (checkNum !== "") {
-            axios.post('/pw', {
-                ch_pw: checkNum
-            })
-                .then(({data}) => {
-                    console.log(data.pwchange);
-                    if(data.pwchange === "succed"){
-                        setCheck(true);
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
+        if (checkNum.toString() == isCheckNum['isCheckNum'].toString()) {
+            alert("인증번호가 확인이 되었습니다");
+            setCheck({isCheck: true});
         } else {
-            alert("입력칸을 확인해주세요");
+            alert("인증번호를 잘못 입력하셨습니다");
             setInputs({
                 ...inputs,
                 checkNum: ""
             })
         }
-        console.log(email);
     }
 
     /* 기존의 비밀번호를 새로운 비밀번호로 변경 */
@@ -80,8 +67,18 @@ const ChangePW = (props) => {
                 ch_id: id,
                 ch_pw: pw
             })
-                .then((response) => {
-                    console.log(response.data);
+                .then(({data}) => {
+                    console.log(data);
+                    if(data.pwchange){
+                        alert("비밀번호가 변경되었습니다");
+                        props.onClose();
+                    } else {
+                        alert("아이디를 확인해주세요");
+                        setInputs({
+                            ...inputs,
+                            id: ""
+                        })
+                    }
                 })
                 .catch((error) => {
                     console.log(error);
@@ -103,7 +100,7 @@ const ChangePW = (props) => {
                     <img src="img/BRICK.png" alt="logo" />
                     <h1 onClick={props.onClose}>비밀번호 변경</h1>
                 </div>
-                {isCheck ? (
+                {isCheck ? (    // 인증받았는지 확인
                     <>
                         아이디
                         <input name="id" type="text" value={id} onChange={onChange} />
@@ -117,7 +114,7 @@ const ChangePW = (props) => {
                         <input name="email" type="text" value={email} onChange={onChange} />
                         <button onClick={onSumbitEmail}>이메일 인증</button>
                         인증번호
-                        <input name="checkNum" type="text" value={checkNum} onChange={onChange} />
+                        <input name="checkNum" type="number" value={checkNum} onChange={onChange} />
                         <button onClick={onSumbitCheckNum}>인증번호 확인</button>
                     </>)
                 }
