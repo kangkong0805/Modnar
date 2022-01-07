@@ -16,11 +16,11 @@ const Header = () => {
   const [loginCheck, setLoginCheck] = useState(() => JSON.parse(window.localStorage.getItem("loginCheck")) || false); // 로그인 되어 있는지 체크
 
   useEffect(() => {
-    window.localStorage.setItem("loginCheck", JSON.stringify(loginCheck));
+    window.localStorage.setItem("loginCheck", JSON.stringify(loginCheck));  // 브라우저 상에 로그인 체크 데이터 저장 (새로고침해도 값 초기화 안됨)
   }, [loginCheck])
 
   const onProfile = () => {
-    triggerNotif(); //  알림 띄우기
+    // triggerNotif(); //  알림 띄우기
     setClick(true);
     setProfile(!isProfile);
   }
@@ -68,7 +68,7 @@ const Header = () => {
     <>
       <header>  {/* 헤더바 */}
         <div>
-          <Link to="/"><img src="img/logo.png" alt="logo" /></Link>  {/* 로고 */}
+          <Link to="/"><img src="/img/logo.png" alt="logo" /></Link>  {/* 로고 */}
         </div>
         <nav>
           <ul>

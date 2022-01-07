@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import Header from "./Header";
 
-function Upload() {
+export default function Upload() {
   const [tags, setTags] = useState({
     electronics: false, // 전자제품 태그
     fasion: false,      // 패션 태크
@@ -97,15 +97,15 @@ function Upload() {
     /* 파일 확인 여부 */
     // if (file[0] === undefined) {
     //   alert("이미지가 있는 파일을 추가해주세요");
-    // }
+    // } else {
     /* 제목 작성 여부 */
     if (title === "") {
       alert("제목을 입력해주세요");
     }
     /* 태그 선택 확인 여부 */
-    // else if (checkTag !== true) {
-    //   alert("태그 체크 해 주세요");
-    // }
+    else if (checkTag !== true) {
+      alert("태그 체크 해 주세요");
+    }
     /* 설명 작성 여부 */
     else if (explanation === "") {
       alert("설명을 작성해주세요");
@@ -114,8 +114,8 @@ function Upload() {
       axios.post('/uploading', {
         title: title,
         content: explanation,
-        tag: "abc",
-        price: 10,
+        tag: string,
+        price: price,
         file: file[0]
       })
         .then((response) => {
@@ -129,10 +129,10 @@ function Upload() {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="upload">
         <form action="/uploading" enctype="multipart/form-data" method="post">
-          <div id="component">
+          {/* <div id="component">
             <h2>사진</h2>
             <input type="file" name="attachments" id="picture" onClick={ShowImage} multiple />
             <label htmlFor="picture">
@@ -141,13 +141,13 @@ function Upload() {
                   <img id="preview" src={file[0]} alt="img" />  // 선택한 파일의 이미지
                 ) : (
                   <>
-                    <img id="nonePicture" src="grayLogo.png" />
+                    <img id="nonePicture" src="grayLogo.png" alt="img" />
                     <p>사진을 선택해주세요.</p>
                   </>
                 )}
               </div>
             </label>
-          </div>
+          </div> */}
 
           <div id="title-component">
             <h2>제목</h2>
@@ -178,4 +178,3 @@ function Upload() {
     </>
   );
 }
-export default Upload;

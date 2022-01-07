@@ -45,9 +45,9 @@ const ChangePW = (props) => {
 
     /* 이메일로 발급받은 인증번호 확인 */
     const onSumbitCheckNum = () => {
-        console.log(checkNum.toString() == isCheckNum['isCheckNum'].toString());
+        console.log(checkNum.toString() === isCheckNum['isCheckNum'].toString());
         // var reg_email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-        if (checkNum.toString() == isCheckNum['isCheckNum'].toString()) {
+        if (checkNum.toString() === isCheckNum['isCheckNum'].toString()) {
             alert("인증번호가 확인이 되었습니다");
             setCheck({isCheck: true});
         } else {

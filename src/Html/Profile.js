@@ -1,6 +1,5 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
-
+import React from "react";
+import { Link } from "react-router-dom";
 const Profile = props => {
 
     return (
@@ -13,17 +12,18 @@ const Profile = props => {
             >
 
                 <div className="img">
-                    {/* <img src="" alt="logo" /> */}
+                    <img src="img/BRICK.png" alt="brick"/>
                 </div>
-                <h3>이름</h3>
+                <h3>벽돌</h3>
                 <span />
+                
+                {/* 메뉴 */}
                 <ul>
                     <li>프로필 사진</li>
                     <li>닉네임 변경</li>
-                    <li>업로드 변경</li>
+                    <Link to="/upload"><li>업로드 하기</li></Link>
                     <li>내상품 관리</li>
                 </ul>
-
             </div>
         </div>
     )

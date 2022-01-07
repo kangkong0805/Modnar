@@ -9,7 +9,9 @@
     "cors": "^2.8.5",
     "http-proxy-middleware": "^2.0.1",
     "react": "^17.0.2",
+    "react-cookie": "^4.1.1",
     "react-dom": "^17.0.2",
+    "react-notifications": "^1.7.3",
     "react-router-dom": "^6.1.1",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.1.2"
@@ -38,5 +40,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:8080"
+  "proxy": "http://192.168.175.179:3000"
 }

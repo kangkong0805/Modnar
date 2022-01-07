@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const Login = props => {
     const [inputs, setInputs] = useState({
@@ -8,7 +8,6 @@ const Login = props => {
     });
     const { ID, PW } = inputs;
 
-    const [check, setCheck] = useState(false);
 
     const onChange = (e) => {
         const { value, name } = e.target;
@@ -65,50 +64,34 @@ const Login = props => {
         props.onClose();
     }
 
-    const useNotification = (title, options) => {
-        if (!("Notification" in window)) {
-            return;
-        }
-
-        const fireNotif = () => {
-            /* 권한 요청 부분 */
-            if (Notification.permission !== "granted") {
-                Notification.requestPermission().then((permission) => {
-                    if (permission === "granted") {
-                        /* 권한을 요청받고 nofi를 생성해주는 부분 */
-                        new Notification(title, options);
-                    } else {
-                        return;
-                    }
-                });
-            } else {
-                /* 권한이 있을때 바로 noti 생성해주는 부분 */
-                new Notification(title, options);
-            }
-        };
-        return fireNotif;
-    };
-
-    const triggerNotif = useNotification("test", {
-        body: "id : "+ID+", pw : "+PW
-    });
-
     return (
         <div className="background_layer gray">
-            <div id="login_layer">
-                <div>
-                    <img src="img/BRICK.png" alt="logo" />
-                    <h1 onClick={props.onClose}>{check ? "로그아웃" : "로그인"}</h1>
-                </div>
-                <p>아이디</p>
-                <input name="ID" type="text" value={ID} onChange={onChange} />
-                <p>비밀번호</p>
-                <input name="PW" type="password" value={PW} onChange={onChange} />
-                <button onClick={onSumbit}>로그인</button>
-                <button onClick={onJoin}>회원가입</button>
-                <h4 onClick={onFindPW}>비밀번호 찾기</h4>
-            </div>
+      <div id="login_layer">
+        <div>
+          <img src="BRICK.png" alt="logo" />
+          <h1 onClick={props.onClose}>로그인</h1>
         </div>
+        <input
+          name="ID"
+          type="text"
+          value={ID}
+          onChange={onChange}
+          placeholder="아이디"
+        />
+        <input
+          name="PW"
+          type="password"
+          value={PW}
+          onChange={onChange}
+          placeholder="비밀번호"
+        />
+        <button onClick={onSumbit}>로그인</button>
+        <span>
+          <h4 onClick={onFindPW}> 비밀번호 찾기&nbsp; </h4>
+          <h3 onClick={onJoin}> &nbsp;회원가입</h3>
+        </span>
+      </div>
+    </div>
     )
 }
 
